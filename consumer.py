@@ -15,13 +15,20 @@ consumer = KafkaConsumer(
 try:
     while True:
         time.sleep(3)
-        messages = consumer.poll()
-        while (msg := messages.next()):
-            print(msg[0])
-            
-        # for key,value in messages.items():
-        #     print(len(value))
         
+        messages = consumer.poll(10)
+        
+        new_orders = []
+        for key,value in messages.items():
+            totalt_antal_meddelanden = len(value)
+            for msg in value:
+                new_orders.append(msg.value)
+
+        with open('orders_done.txt','a') as f:
+            f.write(json.dumps(new_orders,indent=4) + '\n')
+
+        print(f'Totalt nya ordrar skrivna till fil är {len(new_orders)}')
+
 except KeyboardInterrupt:
     print('Stänger')
 finally:

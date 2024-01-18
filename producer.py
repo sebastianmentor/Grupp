@@ -59,7 +59,7 @@ if __name__ == '__main__':
     try:
         while True:
             time.sleep(1)
-            slumpar_ungefär_25 = int(random.gauss(mu=5, sigma=2))
+            slumpar_ungefär_25 = int(random.gauss(mu=25, sigma=2))
             for _ in range(slumpar_ungefär_25):
                 order_id += 1
                 new_order = random_order(order_id)
